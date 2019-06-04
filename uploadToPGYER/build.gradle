@@ -1,0 +1,21 @@
+plugins{
+    id 'groovy'
+    id 'maven'
+}
+dependencies {
+    compile gradleApi()
+    compile localGroovy()
+    compile "com.android.tools.build:gradle:3.0.0-alpha1"
+}
+repositories {
+    mavenCentral()
+}
+group='com.yodoo.plugin'
+version='1.0.0'
+uploadArchives{
+    repositories {
+        mavenDeployer {
+            repository(url: uri('../publish'))
+        }
+    }
+}
