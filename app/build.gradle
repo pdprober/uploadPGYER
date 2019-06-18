@@ -35,5 +35,5 @@ dependencies {
 //apply plugin: 'com.yodoo.myplugin'
 //UploadToPGYER {
 //    uploadBuildType = "debug"
-//    pgyerApiKey = '0470d10ec10b694033a1b01c65c4b87a'
+//    pgyerApiKey = 'api key'
 //}

@@ -1,6 +1,7 @@
 plugins{
     id 'groovy'
     id 'maven'
+    id "com.gradle.plugin-publish" version "0.10.1"
 }
 dependencies {
     compile gradleApi()
@@ -10,12 +11,15 @@ dependencies {
 repositories {
     mavenCentral()
 }
-group='com.yodoo.plugin'
-version='1.0.0'
-uploadArchives{
-    repositories {
-        mavenDeployer {
-            repository(url: uri('../publish'))
+pluginBundle {
+    website = 'https://github.com/pdprober/uploadPGYER'
+    vcsUrl = 'https://github.com/pdprober/uploadPGYER'
+    description = 'upload to pgyer'
+    tags = ['upload', 'pgyer', 'yodoo']
+
+    plugins {
+        gradleInit {
+            displayName = 'upload to pgyer'
         }
     }
 }
