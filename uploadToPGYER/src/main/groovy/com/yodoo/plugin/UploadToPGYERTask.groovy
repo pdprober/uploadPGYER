@@ -15,16 +15,18 @@ public class UploadToPGYERTask extends DefaultTask {
     BaseVariant variant
     @Input
     Project project
-    public void setup() {
+
+    void setup() {
         description "Upload release apk to PGYER"
         group "UploadToPGYER"
         dependsOn variant.assemble
     }
 
     @Inject
-    UploadToPGYERTask(BaseVariant variant,Project project) {
+    UploadToPGYERTask(BaseVariant variant, Project project) {
         this.variant = variant
-        this.project=project
+        this.project = project
+        setup()
     }
 
     @TaskAction
@@ -34,7 +36,7 @@ public class UploadToPGYERTask extends DefaultTask {
             if (outputFile != null && outputFile.exists()) {
                 logger.log(LogLevel.ERROR, "start up load apk file : ${outputFile.absolutePath}")
                 def stdout = new ByteArrayOutputStream()
-                UploadToPGYERExtension uploadToPGYERExtensionConfig= project.extensions.findByType(UploadToPGYERExtension)
+                UploadToPGYERExtension uploadToPGYERExtensionConfig = project.extensions.findByType(UploadToPGYERExtension)
                 project.exec {
                     executable = 'curl'
                     args = ['-F', "file=@${outputFile.absolutePath}",
@@ -54,7 +56,7 @@ public class UploadToPGYERTask extends DefaultTask {
                 String output = stdout.toString()
                 logger.log(LogLevel.ERROR, "upload result :$output")
                 def parsedJson = new JsonSlurper().parseText(output)
-                if (parsedJson.code == 0&&uploadToPGYERExtensionConfig.isOpenWeb) {
+                if (parsedJson.code == 0 && uploadToPGYERExtensionConfig.isOpenWeb) {
                     project.exec {
                         executable = 'cmd'
                         args = ['/c', "start", "https://www.pgyer.com/${parsedJson.data.buildShortcutUrl}"]

@@ -29,8 +29,10 @@ public class UploadToPGYERPlugin implements Plugin<Project> {
                     throw new GradleException('pgyerApiKey is empty,please deploy pgyerApiKey')
                 }
                 if (buildType == variant.buildType.name) {
-                    UploadToPGYERTask uploadToPGYERTask = project.tasks.create("upload${variant.buildType.name}ToPGYER", UploadToPGYERTask, variant, project)
-                    uploadToPGYERTask.setup()
+                    String taskName = "upload${variant.buildType.name}ToPGYER";
+                    if (project.tasks.findByName(taskName) == null) {
+                        UploadToPGYERTask uploadToPGYERTask = project.tasks.create(taskName, UploadToPGYERTask, variant, project)
+                    }
                 }
             }
         }
